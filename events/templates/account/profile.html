@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block content %}
+
+<h2>الملف الشخصي</h2>
+
+<p>
+    <strong>اسم المستخدم:</strong>
+    {{ user.username }}
+</p>
+
+<p>
+    <strong>البريد الإلكتروني:</strong>
+    {{ user.email }}
+</p>
+
+<p>
+    <strong>تاريخ إنشاء الحساب:</strong>
+    {{ user.date_joined }}
+</p>
+
+<a href="{% url 'logout' %}">
+    تسجيل الخروج
+</a>
+
+{% endblock %}

@@ -1,0 +1,335 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}EventHub{% endblock %}
+    </title>
+
+    <meta name="description"
+          content="EventHub - منصة اكتشاف وحجز الفعاليات">
+
+    <!-- CSS الرئيسي -->
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    {% block css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <!-- ================= BACKGROUND ================= -->
+
+    <div class="background-grid"></div>
+
+    <div class="background-glow glow-one"></div>
+
+    <div class="background-glow glow-two"></div>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <!-- LOGO -->
+
+            <a href="{% url 'home' %}" class="logo">
+
+                <span class="logo-icon">
+                    ✦
+                </span>
+
+                <span class="logo-text">
+                    Event<span>Hub</span>
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        الرئيسية
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'events_list' %}">
+                        الفعاليات
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'products_list' %}">
+                        المنتجات
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'categories_list' %}">
+                        التصنيفات
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <!-- THEME -->
+
+                <button
+                    type="button"
+                    class="theme-button"
+                    onclick="toggleTheme()"
+                    title="تغيير الوضع">
+
+                    <span id="themeIcon">
+                        ☀
+                    </span>
+
+                </button>
+<button
+    id="mobileMenuButton"
+    class="mobile-menu-button"
+    onclick="toggleMobileMenu()"
+    aria-label="فتح القائمة"
+    aria-expanded="false">
+    ☰
+</button>
+
+                {% if user.is_authenticated %}
+
+                    <!-- PROFILE -->
+
+                    <a href="{% url 'profile' %}"
+                       class="profile-button">
+
+                        <span class="profile-avatar">
+                            {{ user.username|first|upper }}
+                        </span>
+
+                        <span class="profile-name">
+                            {{ user.username }}
+                        </span>
+
+                    </a>
+
+                {% else %}
+
+                    <!-- LOGIN -->
+
+                    <a href="{% url 'login' %}"
+                       class="login-link">
+
+                        تسجيل الدخول
+
+                    </a>
+
+
+                    <!-- REGISTER -->
+
+                    <a href="{% url 'register' %}"
+                       class="nav-cta">
+
+                        إنشاء حساب
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+
+            <!-- BRAND -->
+
+            <div class="footer-brand">
+
+                <a href="{% url 'home' %}"
+                   class="footer-logo">
+
+                    <span>
+                        ✦
+                    </span>
+
+                    Event<span>Hub</span>
+
+                </a>
+
+                <p>
+
+                    منصتك لاكتشاف أفضل الفعاليات،
+                    وبناء علاقات جديدة،
+                    وصناعة تجارب لا تُنسى.
+
+                </p>
+
+            </div>
+
+
+            <!-- PLATFORM -->
+
+            <div class="footer-column">
+
+                <h4>
+                    المنصة
+                </h4>
+
+                <a href="{% url 'home' %}">
+                    الرئيسية
+                </a>
+
+                <a href="{% url 'events_list' %}">
+                    الفعاليات
+                </a>
+
+                <a href="{% url 'products_list' %}">
+                    المنتجات
+                </a>
+
+                <a href="{% url 'categories_list' %}">
+                    التصنيفات
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+
+            <div class="footer-column">
+
+                <h4>
+                    الحساب
+                </h4>
+
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'profile' %}">
+                        الملف الشخصي
+                    </a>
+
+                    <a href="{% url 'dashboard' %}">
+                        لوحة التحكم
+                    </a>
+
+                    <a href="{% url 'logout' %}">
+                        تسجيل الخروج
+                    </a>
+
+                {% else %}
+
+                    <a href="{% url 'login' %}">
+                        تسجيل الدخول
+                    </a>
+
+                    <a href="{% url 'register' %}">
+                        إنشاء حساب
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- DISCOVER -->
+
+            <div class="footer-column">
+
+                <h4>
+                    اكتشف
+                </h4>
+
+                <a href="{% url 'events_list' %}">
+                    المؤتمرات
+                </a>
+
+                <a href="{% url 'events_list' %}">
+                    الورش
+                </a>
+
+                <a href="{% url 'events_list' %}">
+                    الدورات
+                </a>
+
+                <a href="{% url 'events_list' %}">
+                    الندوات
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 EventHub — جميع الحقوق محفوظة
+            </span>
+
+            <span class="developer">
+
+                تصميم وتطوير
+
+                <strong>
+                    المهندسة حسناء
+                </strong>
+
+                ✨
+
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+    {% block js %}
+    {% endblock %}
+
+</body>
+
+</html>

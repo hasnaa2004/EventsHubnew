@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}إنشاء حساب{% endblock %}
+
+{% block content %}
+
+<h2>إنشاء حساب جديد</h2>
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>اسم المستخدم</label>
+    <input type="text" name="username" required>
+
+    <label>البريد الإلكتروني</label>
+    <input type="email" name="email" required>
+
+    <label>كلمة المرور</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">إنشاء الحساب</button>
+</form>
+
+<p>
+    لديك حساب بالفعل؟
+    <a href="{% url 'login' %}">تسجيل الدخول</a>
+</p>
+
+{% endblock %}

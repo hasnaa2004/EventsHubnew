@@ -1,0 +1,136 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}
+المنتجات | EventHub
+{% endblock %}
+
+{% block content %}
+
+<section class="products-page">
+
+    <div class="products-header">
+
+        <div class="badge-pill">
+            ✦ متجر EventHub
+        </div>
+
+        <h1>
+            اكتشف
+            <span>منتجاتنا</span>
+        </h1>
+
+        <p>
+            منتجات مرتبطة بالفعاليات والتجارب التعليمية
+            والتقنية، اختر ما يناسبك واستكشف التفاصيل.
+        </p>
+
+    </div>
+
+
+    {% if products %}
+
+    <div class="products-grid">
+
+        {% for product in products %}
+
+        <article class="product-card">
+
+            <!-- صورة المنتج -->
+
+            <div class="product-image">
+
+                {% if product.image %}
+
+                    <img
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}">
+
+                {% else %}
+
+                    <div class="product-placeholder">
+                        🛍️
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- معلومات المنتج -->
+
+            <div class="product-content">
+
+                <span class="product-tag">
+                    {{ product.get_category_display }}
+                </span>
+
+                <h2>
+                    {{ product.name }}
+                </h2>
+
+                <p>
+                    {{ product.description|truncatewords:18 }}
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+
+                        <small>
+                            السعر
+                        </small>
+
+                        <strong>
+                            {{ product.price }}
+                        </strong>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'product_detail' product.id %}"
+                        class="product-button">
+
+                        عرض المنتج
+
+                        <span>
+                            ←
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            🛍️
+        </div>
+
+        <h2>
+            لا توجد منتجات حالياً
+        </h2>
+
+        <p>
+            سيتم إضافة المنتجات قريباً.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

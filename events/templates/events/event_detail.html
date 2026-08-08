@@ -1,0 +1,403 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}
+{{ event.title }} | EventHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="event-detail-page">
+
+
+    <!-- =========================
+         TOP
+    ========================== -->
+
+    <div class="event-detail-top">
+
+        <a
+            href="{% url 'events_list' %}"
+            class="back-link">
+
+            → العودة إلى الفعاليات
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <div class="event-detail-hero">
+
+
+        <!-- VISUAL -->
+
+        <div class="event-detail-visual">
+
+            <div class="detail-glow"></div>
+
+            <div class="detail-icon">
+
+                {% if event.category == "course" %}
+
+                    📚
+
+                {% elif event.category == "workshop" %}
+
+                    🛠️
+
+                {% elif event.category == "conference" %}
+
+                    🎤
+
+                {% elif event.category == "seminar" %}
+
+                    💡
+
+                {% else %}
+
+                    ✦
+
+                {% endif %}
+
+            </div>
+
+
+            <span class="detail-category">
+
+                {{ event.get_category_display }}
+
+            </span>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="event-detail-info">
+
+
+            <span class="event-status">
+
+                {% if event.status == "available" %}
+
+                    ● متاح للتسجيل
+
+                {% else %}
+
+                    ● ملغي
+
+                {% endif %}
+
+            </span>
+
+
+            <h1>
+
+                {{ event.title }}
+
+            </h1>
+
+
+            <p class="event-detail-description">
+
+                {{ event.description }}
+
+            </p>
+
+
+            <!-- META -->
+
+            <div class="event-info-grid">
+
+
+                <div class="event-info-item">
+
+                    <span class="info-icon">
+                        📅
+                    </span>
+
+                    <div>
+
+                        <small>
+                            موعد الفعالية
+                        </small>
+
+                        <strong>
+
+                            {{ event.date|date:"Y/m/d" }}
+
+                            <br>
+
+                            {{ event.date|date:"H:i" }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event-info-item">
+
+                    <span class="info-icon">
+                        📍
+                    </span>
+
+                    <div>
+
+                        <small>
+                            الموقع
+                        </small>
+
+                        <strong>
+                            {{ event.location }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event-info-item">
+
+                    <span class="info-icon">
+                        🏷️
+                    </span>
+
+                    <div>
+
+                        <small>
+                            التصنيف
+                        </small>
+
+                        <strong>
+                            {{ event.get_category_display }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event-info-item">
+
+                    <span class="info-icon">
+                        ✨
+                    </span>
+
+                    <div>
+
+                        <small>
+                            الحالة
+                        </small>
+
+                        <strong>
+
+                            {% if event.status == "available" %}
+                                متاح
+                            {% else %}
+                                ملغي
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            {% if event.status == "available" %}
+
+                {% if user.is_authenticated %}
+
+                    <button
+                        type="button"
+                        class="btn detail-register-button"
+                        onclick="showRegistrationMessage()">
+
+                        احجز مقعدك الآن
+                        <span>←</span>
+
+                    </button>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn detail-register-button">
+
+                        سجل دخولك للحجز
+                        <span>←</span>
+
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <button
+                    type="button"
+                    class="btn btn-disabled"
+                    disabled>
+
+                    التسجيل غير متاح
+
+                </button>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DESCRIPTION
+    ========================== -->
+
+    <div class="event-detail-section">
+
+
+        <div class="detail-section-heading">
+
+            <span class="section-number">
+                01
+            </span>
+
+            <div>
+
+                <h2>
+                    عن الفعالية
+                </h2>
+
+                <p>
+                    كل ما تحتاج معرفته قبل الحضور
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-description-box">
+
+            <p>
+
+                {{ event.description }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         HIGHLIGHTS
+    ========================== -->
+
+    <div class="event-highlights">
+
+
+        <div class="highlight-card">
+
+            <span>
+                ⚡
+            </span>
+
+            <div>
+
+                <strong>
+                    تجربة مميزة
+                </strong>
+
+                <p>
+                    محتوى مصمم لتقديم تجربة
+                    عملية ومفيدة للحضور.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="highlight-card">
+
+            <span>
+                🤝
+            </span>
+
+            <div>
+
+                <strong>
+                    تواصل وتعارف
+                </strong>
+
+                <p>
+                    فرصة للتعرف على أشخاص
+                    مهتمين بنفس المجال.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="highlight-card">
+
+            <span>
+                🚀
+            </span>
+
+            <div>
+
+                <strong>
+                    طوّر مهاراتك
+                </strong>
+
+                <p>
+                    اكتسب معرفة جديدة تساعدك
+                    في مسارك المهني.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+{% endblock %}
+
+
+{% block js %}
+
+<script>
+
+function showRegistrationMessage() {
+
+    alert(
+        "تم اختيار الحجز بنجاح ✨\n\nسيتم تطوير نظام الحجز في الخطوة القادمة."
+    );
+
+}
+
+</script>
+
+{% endblock %}
+```

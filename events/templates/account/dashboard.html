@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}لوحة التحكم{% endblock %}
+
+{% block content %}
+
+<h2>لوحة التحكم</h2>
+
+<p>
+    مرحبًا {{ user.username }}
+</p>
+
+<div>
+    <a href="{% url 'profile' %}">
+        الملف الشخصي
+    </a>
+</div>
+
+<div>
+    <a href="{% url 'events_list' %}">
+        إدارة الفعاليات
+    </a>
+</div>
+
+<div>
+    <a href="{% url 'products_list' %}">
+        المنتجات
+    </a>
+</div>
+
+{% if user.is_staff %}
+    <div>
+        <a href="/admin/">
+            لوحة إدارة النظام
+        </a>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,269 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}
+الفعاليات | EventHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="events-page">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="events-header">
+
+        <div class="badge-pill">
+            ✦ اكتشف عالم الفعاليات
+        </div>
+
+        <h1>
+            استكشف
+            <span>الفعاليات</span>
+        </h1>
+
+        <p>
+            اكتشف أفضل المؤتمرات والورش والدورات والندوات،
+            واختر الفعالية المناسبة لك واحجز مقعدك بسهولة.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         FILTERS
+    ========================== -->
+
+    <form method="GET"
+          class="events-filters">
+
+
+        <!-- SEARCH -->
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="🔎 ابحث عن فعالية...">
+
+
+        <!-- CATEGORY -->
+
+        <select name="category">
+
+            <option value="">
+                جميع التصنيفات
+            </option>
+
+            <option value="course"
+                {% if selected_category == "course" %}
+                    selected
+                {% endif %}>
+                الدورات
+            </option>
+
+            <option value="workshop"
+                {% if selected_category == "workshop" %}
+                    selected
+                {% endif %}>
+                الورش
+            </option>
+
+            <option value="conference"
+                {% if selected_category == "conference" %}
+                    selected
+                {% endif %}>
+                المؤتمرات
+            </option>
+
+            <option value="seminar"
+                {% if selected_category == "seminar" %}
+                    selected
+                {% endif %}>
+                الندوات
+            </option>
+
+        </select>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="submit"
+            class="btn">
+
+            بحث
+
+        </button>
+
+    </form>
+
+
+    <!-- =========================
+         RESULTS
+    ========================== -->
+
+    {% if events %}
+
+        <div class="events-grid">
+
+
+            {% for event in events %}
+
+                <article class="event-card">
+
+
+                    <!-- IMAGE / ICON -->
+
+                    <div class="event-card-top">
+
+                        {% if event.category == "course" %}
+
+                            📚
+
+                        {% elif event.category == "workshop" %}
+
+                            🛠️
+
+                        {% elif event.category == "conference" %}
+
+                            🎤
+
+                        {% elif event.category == "seminar" %}
+
+                            💡
+
+                        {% else %}
+
+                            ✦
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+
+                    <div class="event-card-content">
+
+
+                        <!-- CATEGORY -->
+
+                        <span class="event-card-tag">
+
+                            {{ event.get_category_display }}
+
+                        </span>
+
+
+                        <!-- TITLE -->
+
+                        <h3>
+
+                            {{ event.title }}
+
+                        </h3>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <p>
+
+                            {{ event.description }}
+
+                        </p>
+
+
+                        <!-- META -->
+
+                        <div class="event-card-meta">
+
+                            <span>
+
+                                📅
+
+                                {{ event.date|date:"Y/m/d - H:i" }}
+
+                            </span>
+
+
+                            <span>
+
+                                📍
+
+                                {{ event.location }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- DETAILS -->
+
+                        <a
+                            href="{% url 'event_detail' event.id %}"
+                            class="event-card-button">
+
+                            <span>
+                                عرض التفاصيل
+                            </span>
+
+                            <span>
+                                ←
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🔍
+            </div>
+
+            <h2>
+                لا توجد فعاليات
+            </h2>
+
+            <p>
+                لم نعثر على فعاليات تطابق بحثك حالياً.
+                جرّب تغيير كلمات البحث أو التصنيف.
+            </p>
+
+            <a
+                href="{% url 'events_list' %}"
+                class="btn">
+
+                عرض جميع الفعاليات
+
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+
+</section>
+
+{% endblock %}
