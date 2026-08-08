@@ -4,214 +4,226 @@
 EventHub | اكتشف الفعاليات
 {% endblock %}
 
-
 {% block content %}
 
 <!-- ================= HERO ================= -->
 
 <section class="hero">
 
-    <div class="hero-content">
+```
+<div class="hero-content">
 
-        <div class="hero-badge">
-            ✦ منصة الفعاليات الحديثة
+    <div class="hero-badge">
+        ✦ منصة الفعاليات الحديثة
+    </div>
+
+    <h1>
+        اكتشف الفعاليات
+        <br>
+        <span>التي تصنع المستقبل</span>
+    </h1>
+
+    <p class="hero-description">
+        مؤتمرات، ورش، دورات وندوات
+        تجمعك بأشخاص يشاركونك نفس الشغف.
+        اكتشف، تعلم، تواصل، واحجز مقعدك
+        في الفعاليات التي تناسبك.
+    </p>
+
+    <div class="hero-buttons">
+
+        <a href="{% url 'events_list' %}"
+           class="btn btn-primary">
+            استكشف الفعاليات
+            ←
+        </a>
+
+        <a href="{% url 'categories_list' %}"
+           class="btn btn-secondary">
+            تصفح التصنيفات
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= HERO VISUAL ================= -->
+
+<div class="hero-visual">
+
+    <div class="hero-orb"></div>
+
+    <div class="floating-card main-card">
+
+        <div class="event-mini-top">
+
+            <div class="event-icon">
+                🤖
+            </div>
+
+            <span class="event-tag">
+                مؤتمر
+            </span>
+
         </div>
 
+        <h3>
+            مستقبل الذكاء الاصطناعي
+        </h3>
 
-        <h1>
-            اكتشف الفعاليات
-            <br>
-
-            <span>التي تصنع المستقبل</span>
-        </h1>
-
-
-        <p class="hero-description">
-
-            مؤتمرات، ورش، دورات وندوات
-            تجمعك بأشخاص يشاركونك نفس الشغف.
-            اكتشف، تعلم، تواصل، واحجز مقعدك
-            في الفعاليات التي تناسبك.
-
+        <p>
+            اكتشف أحدث التقنيات
+            والابتكارات في عالم الذكاء الاصطناعي.
         </p>
 
+        <div class="card-footer">
 
-        <div class="hero-buttons">
+            <span>
+                📅 أغسطس 2026
+            </span>
 
-            <a href="{% url 'events_list' %}"
-               class="btn btn-primary">
-
-                استكشف الفعاليات
-                ←
-
-            </a>
-
-
-            <a href="{% url 'categories_list' %}"
-               class="btn btn-secondary">
-
-                تصفح التصنيفات
-
-            </a>
+            <span class="card-price">
+                احجز الآن
+            </span>
 
         </div>
 
     </div>
 
 
-    <!-- VISUAL -->
+    <div class="floating-card second-card">
 
-    <div class="hero-visual">
+        <div class="event-mini-top">
 
-        <div class="hero-orb"></div>
-
-
-        <div class="floating-card main-card">
-
-            <div class="event-mini-top">
-
-                <div class="event-icon">
-                    🤖
-                </div>
-
-                <span class="event-tag">
-                    مؤتمر
-                </span>
-
+            <div class="event-icon">
+                🚀
             </div>
 
-
-            <h3>
-                مستقبل الذكاء الاصطناعي
-            </h3>
-
-
-            <p>
-                اكتشف أحدث التقنيات
-                والابتكارات في عالم الذكاء الاصطناعي.
-            </p>
-
-
-            <div class="card-footer">
-
-                <span>
-                    📅 أغسطس 2026
-                </span>
-
-                <span class="card-price">
-                    احجز الآن
-                </span>
-
-            </div>
+            <span class="event-tag">
+                ورشة
+            </span>
 
         </div>
 
+        <h3>
+            بناء المشاريع التقنية
+        </h3>
 
-        <div class="floating-card second-card">
-
-            <div class="event-mini-top">
-
-                <div class="event-icon">
-                    🚀
-                </div>
-
-                <span class="event-tag">
-                    ورشة
-                </span>
-
-            </div>
-
-
-            <h3>
-                بناء المشاريع التقنية
-            </h3>
-
-
-            <p>
-                طور فكرتك وحولها إلى مشروع حقيقي.
-            </p>
-
-        </div>
+        <p>
+            طور فكرتك وحولها إلى مشروع حقيقي.
+        </p>
 
     </div>
+
+</div>
+```
 
 </section>
-
-
 
 <!-- ================= STATS ================= -->
 
 <section class="stats">
 
-    <div class="stat">
+```
+<div class="stat">
 
-        <div class="stat-number">
-            10K+
-        </div>
-
-        <div class="stat-label">
-            مستخدم
-        </div>
-
+    <div class="stat-number">
+        10K+
     </div>
 
-
-    <div class="stat">
-
-        <div class="stat-number">
-            250+
-        </div>
-
-        <div class="stat-label">
-            فعالية
-        </div>
-
+    <div class="stat-label">
+        مستخدم
     </div>
 
+</div>
 
-    <div class="stat">
 
-        <div class="stat-number">
-            80+
-        </div>
+<div class="stat">
 
-        <div class="stat-label">
-            متحدث
-        </div>
-
+    <div class="stat-number">
+        250+
     </div>
 
-
-    <div class="stat">
-
-        <div class="stat-number">
-            35+
-        </div>
-
-        <div class="stat-label">
-            جهة منظمة
-        </div>
-
+    <div class="stat-label">
+        فعالية
     </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-number">
+        80+
+    </div>
+
+    <div class="stat-label">
+        متحدث
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-number">
+        35+
+    </div>
+
+    <div class="stat-label">
+        جهة منظمة
+    </div>
+
+</div>
+```
 
 </section>
-
-
 
 <!-- ================= FEATURES ================= -->
 
 <section class="section">
 
-    <div class="section-heading">
+```
+<div class="section-heading">
 
-        <div>
+    <div>
 
-            <h2>
-                كل ما تحتاجه في مكان واحد
-            </h2>
+        <h2>
+            كل ما تحتاجه في مكان واحد
+        </h2>
+
+        <p>
+            تجربة سهلة لاكتشاف وحجز أفضل الفعاليات.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="cards-grid">
+
+
+    <div class="card">
+
+        <div class="card-image">
+            🔎
+        </div>
+
+        <div class="card-body">
+
+            <span class="card-category">
+                اكتشف
+            </span>
+
+            <h3>
+                اعثر على فعاليتك القادمة
+            </h3>
 
             <p>
-                تجربة سهلة لاكتشاف وحجز أفضل الفعاليات.
+                تصفح مئات الفعاليات
+                واختر ما يناسب اهتماماتك.
             </p>
 
         </div>
@@ -219,90 +231,61 @@ EventHub | اكتشف الفعاليات
     </div>
 
 
-    <div class="cards-grid">
+    <div class="card">
 
-
-        <div class="card">
-
-            <div class="card-image">
-                🔎
-            </div>
-
-            <div class="card-body">
-
-                <span class="card-category">
-                    اكتشف
-                </span>
-
-                <h3>
-                    اعثر على فعاليتك القادمة
-                </h3>
-
-                <p>
-                    تصفح مئات الفعاليات
-                    واختر ما يناسب اهتماماتك.
-                </p>
-
-            </div>
-
+        <div class="card-image">
+            🎟️
         </div>
 
+        <div class="card-body">
 
-        <div class="card">
+            <span class="card-category">
+                احجز
+            </span>
 
-            <div class="card-image">
-                🎟️
-            </div>
+            <h3>
+                حجز سريع وسهل
+            </h3>
 
-            <div class="card-body">
-
-                <span class="card-category">
-                    احجز
-                </span>
-
-                <h3>
-                    حجز سريع وسهل
-                </h3>
-
-                <p>
-                    احجز مقعدك في ثوانٍ
-                    واستعد لتجربة مميزة.
-                </p>
-
-            </div>
+            <p>
+                احجز مقعدك في ثوانٍ
+                واستعد لتجربة مميزة.
+            </p>
 
         </div>
-
-
-        <div class="card">
-
-            <div class="card-image">
-                🤝
-            </div>
-
-            <div class="card-body">
-
-                <span class="card-category">
-                    تواصل
-                </span>
-
-                <h3>
-                    قابل أشخاصًا جدد
-                </h3>
-
-                <p>
-                    وسّع شبكة علاقاتك
-                    وتواصل مع المهتمين بمجالك.
-                </p>
-
-            </div>
-
-        </div>
-
 
     </div>
 
-</section>
 
+    <div class="card">
+
+        <div class="card-image">
+            🤝
+        </div>
+
+        <div class="card-body">
+
+            <span class="card-category">
+                تواصل
+            </span>
+
+            <h3>
+                قابل أشخاصًا جدد
+            </h3>
+
+            <p>
+                وسّع شبكة علاقاتك
+                وتواصل مع المهتمين بمجالك.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+```
+
+</section>
 
 {% endblock %}

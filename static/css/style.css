@@ -586,112 +586,104 @@ main {
     margin: auto;
 }
 
-
-/* =========================================================
-   HERO
-========================================================= */
+/* =========================
+   HERO CENTER
+========================= */
 
 .hero {
-    width: min(1250px, 92%);
+    position: relative;
+    min-height: 650px;
 
+    padding: 90px 20px;
+
+    max-width: 1250px;
     margin: auto;
 
-    padding:
-        105px 0
-        95px;
-
-    display: grid;
-
-    grid-template-columns:
-        1.05fr
-        0.95fr;
+    display: flex;
+    flex-direction: column;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 70px;
+    text-align: center;
+
+    gap: 45px;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
+
+    width: 100%;
+    max-width: 850px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
 }
 
 .hero-badge {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 8px 15px;
-
-    border-radius: 50px;
-
-    color: #a5b4fc;
-
-    background: var(--glow);
-
-    border:
-        1px solid rgba(129, 140, 248, 0.24);
-
-    font-size: 0.75rem;
-
-    font-weight: 800;
-
-    margin-bottom: 24px;
-
-    box-shadow:
-        0 8px 25px rgba(99, 102, 241, 0.08);
+    margin-bottom: 22px;
 }
 
 .hero h1 {
-    font-size:
-        clamp(
-            2.8rem,
-            6vw,
-            5.2rem
-        );
+    width: 100%;
+    text-align: center;
 
-    line-height: 1.05;
+    font-size: clamp(
+        2.8rem,
+        6vw,
+        5rem
+    );
 
-    font-weight: 950;
+    line-height: 1.1;
+    font-weight: 900;
 
-    letter-spacing: -2.5px;
+    letter-spacing: -2px;
 
     margin-bottom: 25px;
 }
 
-.hero h1 span {
-    background: var(--gradient);
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-}
-
 .hero-description {
-    max-width: 630px;
+    max-width: 700px;
+
+    margin: 0 auto 32px;
+
+    text-align: center;
 
     color: var(--text-muted);
 
-    font-size: 1rem;
+    font-size: 1.05rem;
 
     line-height: 2;
-
-    margin-bottom: 34px;
 }
 
 .hero-buttons {
     display: flex;
 
+    justify-content: center;
     align-items: center;
 
-    gap: 12px;
+    gap: 14px;
 
     flex-wrap: wrap;
 }
 
+.hero-visual {
+    position: relative;
+
+    width: 100%;
+    max-width: 650px;
+
+    height: 420px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
 
 /* =========================================================
    BUTTONS
