@@ -2,29 +2,210 @@
 
 {% block title %}تسجيل الدخول{% endblock %}
 
+{% block css %}
+<style>
+    .login-page {
+        min-height: calc(100vh - 180px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 430px;
+        padding: 40px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .login-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        font-size: 30px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        color: white;
+        box-shadow: 0 10px 30px rgba(108, 99, 255, 0.35);
+    }
+
+    .login-header h2 {
+        margin: 0 0 10px;
+        font-size: 30px;
+    }
+
+    .login-header p {
+        margin: 0;
+        opacity: 0.7;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .login-form label {
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .login-form input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.07);
+        color: inherit;
+        font-size: 16px;
+        outline: none;
+        transition: 0.25s;
+    }
+
+    .login-form input:focus {
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .login-button {
+        margin-top: 22px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+    }
+
+    .login-error {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        background: rgba(220, 53, 69, 0.12);
+        color: #ff6b6b;
+        text-align: center;
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 25px;
+        opacity: 0.85;
+    }
+
+    .register-link a {
+        color: #8b5cf6;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+
 {% block content %}
 
-<h2>تسجيل الدخول</h2>
+<section class="login-page">
 
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
+    <div class="login-card">
 
-<form method="post">
-    {% csrf_token %}
+        <div class="login-header">
 
-    <label>اسم المستخدم</label>
-    <input type="text" name="username" required>
+            <div class="login-icon">
+                🔐
+            </div>
 
-    <label>كلمة المرور</label>
-    <input type="password" name="password" required>
+            <h2>تسجيل الدخول</h2>
 
-    <button type="submit">تسجيل الدخول</button>
-</form>
+            <p>
+                مرحبًا بعودتك إلى EventHub
+            </p>
 
-<p>
-    ليس لديك حساب؟
-    <a href="{% url 'register' %}">إنشاء حساب</a>
-</p>
+        </div>
+
+
+        {% if error %}
+            <div class="login-error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+
+        <form method="post" class="login-form">
+
+            {% csrf_token %}
+
+            <label for="username">
+                اسم المستخدم
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="أدخل اسم المستخدم"
+                required
+            >
+
+
+            <label for="password">
+                كلمة المرور
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="أدخل كلمة المرور"
+                required
+            >
+
+
+            <button type="submit" class="login-button">
+                تسجيل الدخول
+            </button>
+
+        </form>
+
+
+        <div class="register-link">
+
+            ليس لديك حساب؟
+
+            <a href="{% url 'register' %}">
+                إنشاء حساب
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

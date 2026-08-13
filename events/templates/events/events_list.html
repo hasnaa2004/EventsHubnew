@@ -1,4 +1,3 @@
-```html
 {% extends "base.html" %}
 
 {% block title %}
@@ -38,8 +37,7 @@
          FILTERS
     ========================== -->
 
-    <form method="GET"
-          class="events-filters">
+    <form method="GET" class="events-filters">
 
 
         <!-- SEARCH -->
@@ -47,50 +45,122 @@
         <input
             type="text"
             name="q"
-            value="{{ query }}"
-            placeholder="🔎 ابحث عن فعالية...">
+            value="{{ query|default:'' }}"
+            placeholder="🔎 ابحث عن فعالية..."
+        >
 
 
         <!-- CATEGORY -->
 
         <select name="category">
 
-            <option value="">
-                جميع التصنيفات
-            </option>
+            {% for code, name in categories %}
 
-            <option value="course"
-                {% if selected_category == "course" %}
-                    selected
-                {% endif %}>
-                الدورات
-            </option>
+                <option
+                    value="{{ code }}"
+                    {% if selected_category == code %}
+                        selected
+                    {% endif %}
+                >
 
-            <option value="workshop"
-                {% if selected_category == "workshop" %}
-                    selected
-                {% endif %}>
-                الورش
-            </option>
+                    {{ name|title }}
 
-            <option value="conference"
-                {% if selected_category == "conference" %}
-                    selected
-                {% endif %}>
-                المؤتمرات
-            </option>
+                </option>
 
-            <option value="seminar"
-                {% if selected_category == "seminar" %}
-                    selected
-                {% endif %}>
-                الندوات
-            </option>
+            {% endfor %}
 
         </select>
 
 
-        <!-- BUTTON -->
+        <!-- STATUS -->
+
+        <select name="status">
+
+            {% for code, name in statuses %}
+
+                <option
+                    value="{{ code }}"
+                    {% if selected_status == code %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ name|title }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <!-- TYPE -->
+
+        <select name="event_type">
+
+            {% for code, name in event_types %}
+
+                <option
+                    value="{{ code }}"
+                    {% if selected_type == code %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ name|title }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <!-- CITY -->
+
+        <select name="city">
+
+            {% for code, name in cities %}
+
+                <option
+                    value="{{ code }}"
+                    {% if selected_city == code %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ name|title }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <!-- SORT -->
+
+        <select name="sort">
+
+            {% for code, name in sort_options %}
+
+                <option
+                    value="{{ code }}"
+                    {% if selected_sort == code %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ name|title }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <!-- SEARCH BUTTON -->
 
         <button
             type="submit"
@@ -100,7 +170,59 @@
 
         </button>
 
+
+        <!-- RESET -->
+
+        <a
+            href="{% url 'events_list' %}"
+            class="btn">
+
+            إعادة ضبط
+
+        </a>
+
     </form>
+
+
+    <!-- =========================
+         RESULTS INFORMATION
+    ========================== -->
+
+    <div class="events-result-info">
+
+        {% if events %}
+
+            <p>
+
+                تم العثور على
+
+                <strong>
+                    {{ events|length }}
+                </strong>
+
+                فعالية
+
+                {% if query %}
+
+                    تحتوي على:
+
+                    <strong>
+                        "{{ query|truncatechars:30 }}"
+                    </strong>
+
+                {% endif %}
+
+            </p>
+
+        {% else %}
+
+            <p>
+                لا توجد نتائج مطابقة للبحث الحالي.
+            </p>
+
+        {% endif %}
+
+    </div>
 
 
     <!-- =========================
@@ -120,6 +242,7 @@
                     <!-- IMAGE / ICON -->
 
                     <div class="event-card-top">
+
 
                         {% if event.category == "course" %}
 
@@ -143,6 +266,21 @@
 
                         {% endif %}
 
+
+                        {% if forloop.first %}
+
+                            <span class="featured">
+                                ⭐ مميزة
+                            </span>
+
+                        {% elif forloop.last %}
+
+                            <span class="featured">
+                                ✨ الأخيرة
+                            </span>
+
+                        {% endif %}
+
                     </div>
 
 
@@ -155,7 +293,7 @@
 
                         <span class="event-card-tag">
 
-                            {{ event.get_category_display }}
+                            {{ event.get_category_display|title }}
 
                         </span>
 
@@ -164,7 +302,7 @@
 
                         <h3>
 
-                            {{ event.title }}
+                            {{ event.title|title }}
 
                         </h3>
 
@@ -173,7 +311,7 @@
 
                         <p>
 
-                            {{ event.description }}
+                            {{ event.description|truncatewords:25 }}
 
                         </p>
 
@@ -181,6 +319,7 @@
                         <!-- META -->
 
                         <div class="event-card-meta">
+
 
                             <span>
 
@@ -195,9 +334,61 @@
 
                                 📍
 
-                                {{ event.location }}
+                                {{ event.location|title }}
 
                             </span>
+
+
+                            {% if event.price %}
+
+                                <span>
+
+                                    💰
+
+                                    {{ event.price }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span>
+
+                                    🎟️
+
+                                    مجاني
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- EXTRA INFORMATION -->
+
+                        <div class="event-extra">
+
+
+                            <span>
+
+                                🔤 اسم الفعالية:
+
+                                {{ event.title|length }}
+
+                                حرف
+
+                            </span>
+
+
+                            <span>
+
+                                🔠
+
+                                {{ event.get_category_display|upper }}
+
+                            </span>
+
 
                         </div>
 
@@ -222,6 +413,7 @@
 
                 </article>
 
+
             {% endfor %}
 
 
@@ -237,18 +429,37 @@
 
         <div class="empty-state">
 
+
             <div class="empty-icon">
                 🔍
             </div>
+
 
             <h2>
                 لا توجد فعاليات
             </h2>
 
+
             <p>
+
                 لم نعثر على فعاليات تطابق بحثك حالياً.
-                جرّب تغيير كلمات البحث أو التصنيف.
+
+                {% if query %}
+
+                    حاول البحث بكلمة أخرى.
+
+                {% elif selected_category %}
+
+                    جرّب اختيار تصنيف آخر.
+
+                {% else %}
+
+                    سيتم إضافة فعاليات جديدة قريباً.
+
+                {% endif %}
+
             </p>
+
 
             <a
                 href="{% url 'events_list' %}"
@@ -257,6 +468,7 @@
                 عرض جميع الفعاليات
 
             </a>
+
 
         </div>
 

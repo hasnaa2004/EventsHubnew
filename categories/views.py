@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Category
 
-
 def categories_list_view(request):
 
     categories = Category.objects.all()

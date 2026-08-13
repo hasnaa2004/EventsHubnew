@@ -1,8 +1,7 @@
-```html
 {% extends "base.html" %}
 
 {% block title %}
-{{ event.title }} | EventHub
+{{ event.title|title }} | EventHub
 {% endblock %}
 
 
@@ -70,7 +69,7 @@
 
             <span class="detail-category">
 
-                {{ event.get_category_display }}
+                {{ event.get_category_display|title }}
 
             </span>
 
@@ -82,31 +81,41 @@
         <div class="event-detail-info">
 
 
+            <!-- STATUS -->
+
             <span class="event-status">
 
                 {% if event.status == "available" %}
 
                     ● متاح للتسجيل
 
-                {% else %}
+                {% elif event.status == "cancelled" %}
 
                     ● ملغي
+
+                {% else %}
+
+                    ● حالة غير محددة
 
                 {% endif %}
 
             </span>
 
 
+            <!-- TITLE -->
+
             <h1>
 
-                {{ event.title }}
+                {{ event.title|title }}
 
             </h1>
 
 
+            <!-- DESCRIPTION -->
+
             <p class="event-detail-description">
 
-                {{ event.description }}
+                {{ event.description|truncatewords:35 }}
 
             </p>
 
@@ -115,6 +124,8 @@
 
             <div class="event-info-grid">
 
+
+                <!-- DATE -->
 
                 <div class="event-info-item">
 
@@ -143,6 +154,8 @@
                 </div>
 
 
+                <!-- LOCATION -->
+
                 <div class="event-info-item">
 
                     <span class="info-icon">
@@ -156,13 +169,17 @@
                         </small>
 
                         <strong>
-                            {{ event.location }}
+
+                            {{ event.location|title }}
+
                         </strong>
 
                     </div>
 
                 </div>
 
+
+                <!-- CATEGORY -->
 
                 <div class="event-info-item">
 
@@ -177,13 +194,17 @@
                         </small>
 
                         <strong>
-                            {{ event.get_category_display }}
+
+                            {{ event.get_category_display|title }}
+
                         </strong>
 
                     </div>
 
                 </div>
 
+
+                <!-- STATUS -->
 
                 <div class="event-info-item">
 
@@ -200,9 +221,17 @@
                         <strong>
 
                             {% if event.status == "available" %}
+
                                 متاح
-                            {% else %}
+
+                            {% elif event.status == "cancelled" %}
+
                                 ملغي
+
+                            {% else %}
+
+                                غير محدد
+
                             {% endif %}
 
                         </strong>
@@ -227,7 +256,10 @@
                         onclick="showRegistrationMessage()">
 
                         احجز مقعدك الآن
-                        <span>←</span>
+
+                        <span>
+                            ←
+                        </span>
 
                     </button>
 
@@ -238,11 +270,25 @@
                         class="btn detail-register-button">
 
                         سجل دخولك للحجز
-                        <span>←</span>
+
+                        <span>
+                            ←
+                        </span>
 
                     </a>
 
                 {% endif %}
+
+            {% elif event.status == "cancelled" %}
+
+                <button
+                    type="button"
+                    class="btn btn-disabled"
+                    disabled>
+
+                    التسجيل غير متاح
+
+                </button>
 
             {% else %}
 
@@ -251,7 +297,7 @@
                     class="btn btn-disabled"
                     disabled>
 
-                    التسجيل غير متاح
+                    الحالة غير معروفة
 
                 </button>
 
@@ -305,6 +351,113 @@
 
 
     <!-- =========================
+         EVENT INFORMATION
+    ========================== -->
+
+    <div class="event-detail-section">
+
+
+        <div class="detail-section-heading">
+
+            <span class="section-number">
+                02
+            </span>
+
+            <div>
+
+                <h2>
+                    معلومات إضافية
+                </h2>
+
+                <p>
+                    تفاصيل الفعالية
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-highlights">
+
+
+            <div class="highlight-card">
+
+                <span>
+                    🔤
+                </span>
+
+                <div>
+
+                    <strong>
+                        اسم الفعالية
+                    </strong>
+
+                    <p>
+
+                        {{ event.title|upper }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="highlight-card">
+
+                <span>
+                    📍
+                </span>
+
+                <div>
+
+                    <strong>
+                        مكان الفعالية
+                    </strong>
+
+                    <p>
+
+                        {{ event.location|lower }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="highlight-card">
+
+                <span>
+                    🔢
+                </span>
+
+                <div>
+
+                    <strong>
+                        طول اسم الفعالية
+                    </strong>
+
+                    <p>
+
+                        {{ event.title|length }}
+
+                        حرف
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
          HIGHLIGHTS
     ========================== -->
 
@@ -324,8 +477,10 @@
                 </strong>
 
                 <p>
+
                     محتوى مصمم لتقديم تجربة
                     عملية ومفيدة للحضور.
+
                 </p>
 
             </div>
@@ -346,8 +501,10 @@
                 </strong>
 
                 <p>
+
                     فرصة للتعرف على أشخاص
                     مهتمين بنفس المجال.
+
                 </p>
 
             </div>
@@ -368,8 +525,10 @@
                 </strong>
 
                 <p>
+
                     اكتسب معرفة جديدة تساعدك
                     في مسارك المهني.
+
                 </p>
 
             </div>
@@ -400,4 +559,3 @@ function showRegistrationMessage() {
 </script>
 
 {% endblock %}
-```
