@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="event-form-page">
+    <h1>{{ action }} الفعالية</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">{{ action }}</button>
+    </form>
+</section>
+{% endblock %}

@@ -6,23 +6,16 @@
 
 <h2>الملف الشخصي</h2>
 
-<p>
-    <strong>اسم المستخدم:</strong>
-    {{ user.username }}
-</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p><strong>اسم المستخدم:</strong> {{ user.username }}</p>
+    <p><strong>البريد الإلكتروني:</strong> {{ user.email }}</p>
 
-<p>
-    <strong>البريد الإلكتروني:</strong>
-    {{ user.email }}
-</p>
+    {{ form.as_p }}
 
-<p>
-    <strong>تاريخ إنشاء الحساب:</strong>
-    {{ user.date_joined }}
-</p>
-
-<a href="{% url 'logout' %}">
-    تسجيل الخروج
-</a>
+    <button type="submit" class="btn">حفظ</button>
+    <a href="{% url 'logout' %}" class="btn">تسجيل الخروج</a>
+</form>
 
 {% endblock %}

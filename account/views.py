@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileForm
 
 
 def login_view(request):
@@ -49,11 +52,30 @@ def register_view(request):
     return render(request, 'account/register.html')
 
 
+@login_required
 def profile_view(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+    user = request.user
 
-    return render(request, 'account/profile.html')
+    # ensure a profile exists
+    profile, created = getattr(user, 'profile', (None, True)) if False else (None, None)
+    try:
+        profile = user.profile
+    except Exception:
+        from .models import UserProfile
+        profile = UserProfile.objects.create(user=user, full_name=user.username)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'تم تحديث الملف الشخصي بنجاح')
+            return redirect('profile')
+        else:
+            messages.error(request, 'هناك أخطاء في النموذج. أصلحها ثم أعد المحاولة.')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'account/profile.html', {'form': form})
 def dashboard_view(request):
     if not request.user.is_authenticated:
         return redirect('login')

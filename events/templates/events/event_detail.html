@@ -248,58 +248,43 @@
 
             {% if event.status == "available" %}
 
-                {% if user.is_authenticated %}
+                <div class="event-registration">
 
-                    <button
-                        type="button"
-                        class="btn detail-register-button"
-                        onclick="showRegistrationMessage()">
-
-                        احجز مقعدك الآن
-
+                    <div class="attendee-count">
+                        <strong>
+                            عدد المسجلين:
+                        </strong>
                         <span>
-                            ←
+                            {{ event.attendees_count }}
                         </span>
+                    </div>
 
-                    </button>
+                    {% if user.is_authenticated %}
 
-                {% else %}
+                        <form method="post" action="{% url 'event_register' event.id %}">
+                            {% csrf_token %}
+                            {% if user_registered %}
+                                <button type="submit" class="btn detail-register-button">إلغاء التسجيل</button>
+                            {% else %}
+                                <button type="submit" class="btn detail-register-button">احجز مقعدك الآن</button>
+                            {% endif %}
+                        </form>
 
-                    <a
-                        href="{% url 'login' %}"
-                        class="btn detail-register-button">
+                    {% else %}
 
-                        سجل دخولك للحجز
+                        <a href="{% url 'login' %}" class="btn detail-register-button">سجل دخولك للحجز</a>
 
-                        <span>
-                            ←
-                        </span>
+                    {% endif %}
 
-                    </a>
-
-                {% endif %}
+                </div>
 
             {% elif event.status == "cancelled" %}
 
-                <button
-                    type="button"
-                    class="btn btn-disabled"
-                    disabled>
-
-                    التسجيل غير متاح
-
-                </button>
+                <button type="button" class="btn btn-disabled" disabled>التسجيل غير متاح</button>
 
             {% else %}
 
-                <button
-                    type="button"
-                    class="btn btn-disabled"
-                    disabled>
-
-                    الحالة غير معروفة
-
-                </button>
+                <button type="button" class="btn btn-disabled" disabled>الحالة غير معروفة</button>
 
             {% endif %}
 
