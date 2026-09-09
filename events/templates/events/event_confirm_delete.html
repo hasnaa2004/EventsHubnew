@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="confirm-delete">
+    <h1>تأكيد حذف الفعالية</h1>
+    <p>هل أنت متأكد أنك تريد حذف "{{ event.title }}"؟</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">نعم، احذف</button>
+        <a href="{% url 'event_detail' event.id %}" class="btn">إلغاء</a>
+    </form>
+</section>
+{% endblock %}

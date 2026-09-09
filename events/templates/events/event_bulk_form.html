@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bulk-create">
+    <h1>إنشاء فعاليات متعددة</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="form-row">{{ form.as_p }}</div>
+        {% endfor %}
+        <button type="submit" class="btn">إنشاء</button>
+    </form>
+</section>
+{% endblock %}
