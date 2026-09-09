@@ -1,0 +1,184 @@
+
+{% extends 'base.html' %}
+
+{% block title %}إضافة فعالية | EventHub{% endblock %}
+
+{% block css %}
+<style>
+    .event-form-page {
+        min-height: calc(100vh - 180px);
+        padding: 60px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .event-form-card {
+        width: 100%;
+        max-width: 850px;
+        padding: 40px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .event-form-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .event-form-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        font-size: 30px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        color: white;
+        box-shadow: 0 10px 30px rgba(108, 99, 255, 0.35);
+    }
+
+    .event-form-header h2 {
+        margin: 0 0 10px;
+        font-size: 30px;
+    }
+
+    .event-form-header p {
+        margin: 0;
+        opacity: 0.7;
+    }
+
+    .event-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .event-form form p {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0 0 12px;
+    }
+
+    .event-form label {
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .event-form input,
+    .event-form textarea,
+    .event-form select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.07);
+        color: inherit;
+        font-size: 16px;
+        outline: none;
+        transition: 0.25s;
+    }
+
+    .event-form textarea {
+        min-height: 140px;
+        resize: vertical;
+    }
+
+    .event-form input:focus,
+    .event-form textarea:focus,
+    .event-form select:focus {
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .event-form input[type="file"] {
+        padding: 12px;
+        cursor: pointer;
+    }
+
+    .event-form .helptext {
+        font-size: 13px;
+        opacity: 0.6;
+    }
+
+    .event-form .errorlist {
+        margin: 0;
+        padding: 8px 12px;
+        list-style: none;
+        border-radius: 10px;
+        background: rgba(220, 53, 69, 0.12);
+        color: #ff6b6b;
+    }
+
+    .event-submit {
+        margin-top: 20px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .event-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="event-form-page">
+
+    <div class="event-form-card">
+
+        <div class="event-form-header">
+
+            <div class="event-form-icon">
+                ✦
+            </div>
+
+            <h2>
+                إضافة فعالية جديدة
+            </h2>
+
+            <p>
+                أضف تفاصيل الفعالية والصورة الخاصة بها
+            </p>
+
+        </div>
+
+        <div class="event-form">
+
+            <form method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="event-submit">
+                    إضافة الفعالية
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

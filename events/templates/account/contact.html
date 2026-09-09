@@ -1,0 +1,437 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}
+التواصل | EventHub
+{% endblock %}
+
+
+{% block css %}
+
+<style>
+
+    /* ==========================================
+       الصفحة
+    ========================================== */
+
+    .contact-page {
+        min-height: 70vh;
+        padding: 50px 20px;
+    }
+
+
+    /* ==========================================
+       البطاقة
+    ========================================== */
+
+    .contact-card {
+        max-width: 850px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        border: 1px solid #dbe3ef;
+    }
+
+
+    /* ==========================================
+       العنوان
+    ========================================== */
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .contact-badge {
+        display: inline-block;
+        background: #dbeafe;
+        color: #1d4ed8;
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .contact-header h1 {
+        margin: 0;
+        font-size: 34px;
+        color: #172033;
+    }
+
+    .contact-header h1 span {
+        color: #2563eb;
+    }
+
+    .contact-header p {
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+
+    /* ==========================================
+       النموذج
+    ========================================== */
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+
+    /* ==========================================
+       الحقول
+    ========================================== */
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .required {
+        color: #dc2626;
+    }
+
+
+    /* ==========================================
+       الإدخالات
+    ========================================== */
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 16px;
+        font-family: inherit;
+        color: #172033;
+        background: #ffffff;
+        outline: none;
+    }
+
+    .form-group input {
+        height: 52px;
+    }
+
+    .form-group textarea {
+        min-height: 180px;
+        resize: vertical;
+        line-height: 1.8;
+    }
+
+
+    .form-group select {
+        min-height: 170px;
+        cursor: pointer;
+    }
+
+
+    /* ==========================================
+       التركيز
+    ========================================== */
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+
+    /* ==========================================
+       المساعدة
+    ========================================== */
+
+    .field-help {
+        background: #eff6ff;
+        border-right: 4px solid #2563eb;
+        padding: 12px 15px;
+        border-radius: 10px;
+        color: #334155;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+    /* ==========================================
+       منطقة اختيار المستخدمين
+    ========================================== */
+
+    .users-box {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 15px;
+        padding: 15px;
+    }
+
+
+    .users-box select {
+        background: #ffffff;
+    }
+
+
+    /* ==========================================
+       زر الإرسال
+    ========================================== */
+
+    .contact-submit {
+        width: 100%;
+        margin-top: 5px;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 20px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .contact-submit:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+
+    /* ==========================================
+       العودة
+    ========================================== */
+
+    .contact-back {
+        display: block;
+        margin-top: 18px;
+        text-align: center;
+        text-decoration: none;
+        color: #475569;
+        font-weight: 600;
+    }
+
+    .contact-back:hover {
+        color: #2563eb;
+    }
+
+
+    /* ==========================================
+       الشاشات الصغيرة
+    ========================================== */
+
+    @media (max-width: 700px) {
+
+        .contact-page {
+            padding: 25px 12px;
+        }
+
+        .contact-card {
+            padding: 25px 18px;
+        }
+
+        .contact-header h1 {
+            font-size: 28px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="contact-page">
+
+    <div class="contact-card">
+
+        <!-- ==========================================
+             HEADER
+        =========================================== -->
+
+        <div class="contact-header">
+
+            <div class="contact-badge">
+                ✉️ مركز التواصل
+            </div>
+
+            <h1>
+                إرسال رسالة عبر <span>EventHub</span>
+            </h1>
+
+            <p>
+                اختر مستخدمين من المسجلين في الموقع،
+                أو أدخل عناوين بريد إلكتروني يدويًا،
+                ويمكنك الإرسال إلى أكثر من مستلم في نفس الوقت.
+            </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             FORM
+        =========================================== -->
+
+        <form
+            method="post"
+            class="contact-form"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- ======================================
+                 REGISTERED USERS
+            ======================================= -->
+
+            <div class="form-group">
+
+                <label for="recipient_users">
+                    👥 اختيار مستخدمين من الموقع
+                </label>
+
+                <div class="users-box">
+
+                    <select
+                        id="recipient_users"
+                        name="recipient_users"
+                        multiple
+                    >
+
+                        {% for user in registered_users %}
+
+                            <option value="{{ user.id }}">
+                                {{ user.username }} — {{ user.email }}
+                            </option>
+
+                        {% empty %}
+
+                            <option disabled>
+                                لا يوجد مستخدمون مسجلون لديهم بريد إلكتروني
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="field-help">
+                    لإختيار أكثر من مستخدم اضغط Ctrl أثناء الاختيار
+                    على الكمبيوتر.
+                </div>
+
+            </div>
+
+
+            <!-- ======================================
+                 MANUAL EMAILS
+            ======================================= -->
+
+            <div class="form-group">
+
+                <label for="manual_emails">
+                    📧 إضافة بريد أو عدة عناوين يدويًا
+                </label>
+
+                <textarea
+                    id="manual_emails"
+                    name="manual_emails"
+                    placeholder="example@gmail.com
+another@example.com
+third@example.com"
+                ></textarea>
+
+                <div class="field-help">
+                    يمكنك كتابة أكثر من بريد، كل بريد في سطر مستقل،
+                    أو فصل العناوين باستخدام الفاصلة.
+                </div>
+
+            </div>
+
+
+            <!-- ======================================
+                 SUBJECT
+            ======================================= -->
+
+            <div class="form-group">
+
+                <label for="subject">
+                    📝 موضوع الرسالة
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="مثال: شكر وتقدير"
+                    maxlength="200"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ======================================
+                 MESSAGE
+            ======================================= -->
+
+            <div class="form-group">
+
+                <label for="message">
+                    💬 نص الرسالة
+                    <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="اكتب رسالتك هنا..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- ======================================
+                 SUBMIT
+            ======================================= -->
+
+            <button
+                type="submit"
+                class="contact-submit"
+            >
+                📤 إرسال الرسالة إلى المستلمين
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="contact-back"
+        >
+            ← العودة إلى الصفحة الرئيسية
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

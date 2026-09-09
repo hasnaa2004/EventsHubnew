@@ -64,41 +64,173 @@ SORT_OPTIONS = [
 
 # ==============================
 # أسماء بديلة للتصنيفات
+# عربي + إنجليزي
 # ==============================
 
 CATEGORY_ALIASES = {
 
     "course": [
         "دورة",
-        "كورس",
         "دورات",
+        "كورس",
         "كورسات",
+        "course",
+        "courses",
+        "training",
+        "train",
     ],
 
     "workshop": [
         "ورشة",
         "ورشه",
-        "تدريب",
-        "تدريبية",
+        "ورش",
+        "workshop",
+        "workshops",
     ],
 
     "conference": [
         "مؤتمر",
-        "كونفرنس",
         "مؤتمرات",
+        "كونفرنس",
+        "conference",
+        "conferences",
+        "summit",
+        "forum",
     ],
 
     "seminar": [
         "ندوة",
         "ندوه",
+        "ندوات",
         "سيمنار",
-        "محاضرة",
+        "seminar",
+        "seminars",
+        "lecture",
+        "lectures",
     ],
 }
 
 
 # ==============================
-# دالة الحصول على اسم التصنيف
+# مرادفات الكلمات المهمة
+# ==============================
+
+SEARCH_SYNONYMS = {
+
+    # الأمن السيبراني
+    "امن": [
+        "امن",
+        "أمن",
+        "امان",
+        "security",
+        "secure",
+    ],
+
+    "سيبراني": [
+        "سيبراني",
+        "سيبرانية",
+        "الكتروني",
+        "إلكتروني",
+        "cyber",
+        "cybersecurity",
+        "cyber security",
+    ],
+
+    # الذكاء الاصطناعي
+    "ذكاء": [
+        "ذكاء",
+        "ai",
+        "artificial",
+    ],
+
+    "اصطناعي": [
+        "اصطناعي",
+        "artificial",
+        "intelligence",
+    ],
+
+    # البرمجة
+    "برمجة": [
+        "برمجة",
+        "برمجيات",
+        "programming",
+        "program",
+        "software",
+        "coding",
+        "code",
+    ],
+
+    # قواعد البيانات
+    "قواعد": [
+        "قواعد بيانات",
+        "قاعدة بيانات",
+        "database",
+        "databases",
+        "db",
+    ],
+
+    # الشبكات
+    "شبكات": [
+        "شبكات",
+        "شبكة",
+        "network",
+        "networks",
+    ],
+
+    # تطوير الويب
+    "ويب": [
+        "ويب",
+        "مواقع",
+        "web",
+        "website",
+        "websites",
+    ],
+
+    # تطوير التطبيقات
+    "تطبيقات": [
+        "تطبيق",
+        "تطبيقات",
+        "app",
+        "apps",
+        "application",
+        "applications",
+    ],
+}
+
+
+# ==============================
+# تطبيع النص
+# ==============================
+
+def normalize_text(value):
+
+    if not value:
+        return ""
+
+    value = str(value).strip().lower()
+
+    # توحيد بعض الحروف العربية
+    replacements = {
+        "أ": "ا",
+        "إ": "ا",
+        "آ": "ا",
+        "ة": "ه",
+        "ى": "ي",
+        "ؤ": "و",
+        "ئ": "ي",
+    }
+
+    for old, new in replacements.items():
+        value = value.replace(old, new)
+
+    # توحيد المسافات
+    value = " ".join(value.split())
+
+    return value
+
+
+# ==============================
+# الحصول على اسم التصنيف
 # ==============================
 
 def get_category_name(category_code):
@@ -112,7 +244,7 @@ def get_category_name(category_code):
 
 
 # ==============================
-# دالة الحصول على اسم الحالة
+# الحصول على اسم الحالة
 # ==============================
 
 def get_status_name(status_code):
@@ -126,7 +258,7 @@ def get_status_name(status_code):
 
 
 # ==============================
-# دالة الحصول على اسم نوع الفعالية
+# الحصول على اسم النوع
 # ==============================
 
 def get_type_name(type_code):
@@ -140,7 +272,7 @@ def get_type_name(type_code):
 
 
 # ==============================
-# دالة الحصول على اسم المدينة
+# الحصول على اسم المدينة
 # ==============================
 
 def get_city_name(city_code):
@@ -154,21 +286,93 @@ def get_city_name(city_code):
 
 
 # ==============================
-# دالة البحث عن التصنيف
+# البحث عن التصنيف
+# يدعم العربي والإنجليزي
+# ويدعم أكثر من كلمة
 # ==============================
 
 def find_category(value):
 
+    value = normalize_text(value)
+
     if not value:
         return "all"
-
-    value = value.strip().lower()
 
     for category, names in CATEGORY_ALIASES.items():
 
         for name in names:
 
-            if value == name.lower():
+            name = normalize_text(name)
+
+            if name and name in value:
                 return category
 
     return "all"
+
+
+# ==============================
+# توسيع كلمات البحث بالمرادفات
+# ==============================
+
+def expand_search_terms(value):
+
+    value = normalize_text(value)
+
+    if not value:
+        return []
+
+    terms = [value]
+
+    words = value.split()
+
+    for key, synonyms in SEARCH_SYNONYMS.items():
+
+        key_normalized = normalize_text(key)
+
+        for word in words:
+
+            if word == key_normalized:
+                for synonym in synonyms:
+
+                    synonym = normalize_text(synonym)
+
+                    if synonym not in terms:
+                        terms.append(synonym)
+
+    # أيضًا نفحص العبارات الكاملة
+    for key, synonyms in SEARCH_SYNONYMS.items():
+
+        key_normalized = normalize_text(key)
+
+        if key_normalized in value:
+
+            for synonym in synonyms:
+
+                synonym = normalize_text(synonym)
+
+                if synonym not in terms:
+                    terms.append(synonym)
+
+    return terms
+
+
+# ==============================
+# هل النص يحتوي على كلمة مشابهة؟
+# ==============================
+
+def matches_search(text, search_value):
+
+    text = normalize_text(text)
+    search_value = normalize_text(search_value)
+
+    if not search_value:
+        return True
+
+    terms = expand_search_terms(search_value)
+
+    for term in terms:
+
+        if term and term in text:
+            return True
+
+    return False

@@ -1,0 +1,299 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+الإشعارات | EventHub
+{% endblock %}
+
+
+{% block css %}
+
+<style>
+
+    /* ==============================
+       بطاقات الإشعارات
+    ============================== */
+
+    .notification-read,
+    .notification-unread {
+        border: 1px solid #ddd;
+        border-radius: 18px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+
+    /* الإشعار المقروء */
+
+    .notification-read {
+        background: #f5f5f5;
+    }
+
+
+    /* الإشعار غير المقروء */
+
+    .notification-unread {
+        background: #eef6ff;
+    }
+
+
+    /* ==============================
+       محتوى الإشعار
+    ============================== */
+
+    .notification-content {
+        flex: 1;
+    }
+
+
+    .notification-message {
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 1.7;
+    }
+
+
+    .notification-date {
+        margin-top: 8px;
+        color: #777;
+        font-size: 14px;
+    }
+
+
+    /* ==============================
+       الحالة
+    ============================== */
+
+    .notification-status {
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+
+    .notification-status.read {
+        color: #555;
+    }
+
+
+    /* ==============================
+       زر تمت القراءة
+    ============================== */
+
+    .notification-read-button {
+        border: none;
+        cursor: pointer;
+    }
+
+
+    /* ==============================
+       منطقة الإشعارات
+    ============================== */
+
+    .notifications-container {
+        max-width: 900px;
+        margin: 30px auto;
+    }
+
+
+    /* ==============================
+       تنسيق في الشاشات الصغيرة
+    ============================== */
+
+    @media (max-width: 700px) {
+
+        .notification-read,
+        .notification-unread {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .notification-status {
+            text-align: center;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="events-page">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="events-header">
+
+        <div class="badge-pill">
+            ✦ مركز الإشعارات
+        </div>
+
+
+        <h1>
+            إشعاراتك
+        </h1>
+
+
+        <p>
+            هنا تظهر جميع الإشعارات الخاصة بحسابك.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         NOTIFICATIONS
+    ========================== -->
+
+    {% if notifications %}
+
+        <div class="notifications-container">
+
+
+            {% for notification in notifications %}
+
+
+                <!-- =========================
+                     NOTIFICATION CARD
+                ========================== -->
+
+                <div
+                    class="{% if notification.is_read %}notification-read{% else %}notification-unread{% endif %}"
+                >
+
+
+                    <!-- CONTENT -->
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-message">
+
+                            {% if notification.is_read %}
+
+                                ✅
+
+                            {% else %}
+
+                                🔔
+
+                            {% endif %}
+
+
+                            {{ notification.message }}
+
+                        </div>
+
+
+                        <div class="notification-date">
+
+                            📅
+                            {{ notification.created_at|date:"Y/m/d - H:i" }}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- STATUS / ACTION -->
+
+                    <div class="notification-status">
+
+
+                        {% if not notification.is_read %}
+
+
+                            <form
+                                method="post"
+                                action="{% url 'notification_read' notification.id %}"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn notification-read-button"
+                                >
+                                    تمت القراءة
+                                </button>
+
+                            </form>
+
+
+                        {% else %}
+
+
+                            <span class="read">
+                                ✅ مقروء
+                            </span>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
+
+        <div class="empty-state">
+
+
+            <div class="empty-icon">
+                🔔
+            </div>
+
+
+            <h2>
+                لا توجد إشعارات
+            </h2>
+
+
+            <p>
+                لا توجد إشعارات مرتبطة بحسابك حاليًا.
+            </p>
+
+
+            <a
+                href="{% url 'event_list' %}"
+                class="btn"
+            >
+                العودة إلى الفعاليات
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</section>
+
+{% endblock %}
+

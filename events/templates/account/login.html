@@ -155,7 +155,13 @@
                 {{ error }}
             </div>
         {% endif %}
-
+{% if messages %}
+    {% for message in messages %}
+        <div class="login-error">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
         <form method="post" class="login-form">
 

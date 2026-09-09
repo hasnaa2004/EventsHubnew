@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -17,7 +18,7 @@
     <div class="event-detail-top">
 
         <a
-            href="{% url 'events_list' %}"
+            href="{% url 'event_list' %}"
             class="back-link">
 
             → العودة إلى الفعاليات
@@ -40,27 +41,48 @@
 
             <div class="detail-glow"></div>
 
+
+            <!-- صورة الفعالية -->
+
             <div class="detail-icon">
 
-                {% if event.category == "course" %}
+                {% if event.image %}
 
-                    📚
-
-                {% elif event.category == "workshop" %}
-
-                    🛠️
-
-                {% elif event.category == "conference" %}
-
-                    🎤
-
-                {% elif event.category == "seminar" %}
-
-                    💡
-
+                  <img
+    src="{{ event.image.url }}"
+    alt="{{ event.title }}"
+    style="
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 20px;
+        display: block;
+        margin: auto;
+    "
+>
                 {% else %}
 
-                    ✦
+                    {% if event.category == "course" %}
+
+                        📚
+
+                    {% elif event.category == "workshop" %}
+
+                        🛠️
+
+                    {% elif event.category == "conference" %}
+
+                        🎤
+
+                    {% elif event.category == "seminar" %}
+
+                        💡
+
+                    {% else %}
+
+                        ✦
+
+                    {% endif %}
 
                 {% endif %}
 
@@ -559,3 +581,4 @@ function showRegistrationMessage() {
 </script>
 
 {% endblock %}
+

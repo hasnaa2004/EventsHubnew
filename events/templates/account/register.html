@@ -156,7 +156,13 @@
             </div>
         {% endif %}
 
-
+{% if messages %}
+    {% for message in messages %}
+        <div class="register-error">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
         <form method="post" class="register-form">
 
             {% csrf_token %}
